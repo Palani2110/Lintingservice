@@ -20,4 +20,5 @@ jobs:
           service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
       - name: Build Docker image
-        run: docker build -t test:latest .
+        run: docker build -t test:latest -f /path/to/Dockerfile .
+
