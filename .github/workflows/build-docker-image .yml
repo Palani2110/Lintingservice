@@ -19,6 +19,9 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
+      - name: List files in the root directory
+        run: ls -al
+
       - name: Build Docker image
-        run: docker build -t test:latest -f /Lintingservice .
+        run: docker build -t test:latest  .
 
