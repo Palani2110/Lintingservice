@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - abhigyantest
-  pull_request:
-    branches:
-      - abhigyantest
+  workflow_dispatch:
+    inputs:
+      repository_name:
+        description: 'Name of the repository'
+        required: true
+      location:
+        description: 'Location for the repository'
+        required: true
 
 jobs:
   authenticate:
