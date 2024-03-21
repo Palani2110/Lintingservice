@@ -25,7 +25,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+      - name: "Say Hello Mona it's Monday"
+        run: echo "${{ vars.LOCATION }}".
+        
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
         with:
