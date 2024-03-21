@@ -4,33 +4,44 @@ on:
   push:
     branches:
       - abhigyantest
-
-variables:
+env:
   # Replace with the actual repository name
   REPOSITORY_NAME: my-artifact-repository
 
   # Replace with the desired location (e.g., us-central1)
   LOCATION: us-central1
+  # workflow_dispatch:
+  #   inputs:
+  #     repository_name:
+  #       description: 'Name of the repository'
+  #       required: true
+  #     location:
+  #       description: 'Location for the repository'
+  #       required: true
 
 jobs:
   authenticate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          # Consider using workload identity or uploaded service account key
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
       - name: Check if the repository exists
         id: check_repo
         run: |
-          if gcloud artifacts repositories describe ${{ variables.REPOSITORY_NAME }} --location=${{ variables.LOCATION }} >/dev/null 2>&1; then
-            echo "Repository already exists."
+          if gcloud artifacts repositories describe $REPOSITORY_NAME --location=$LOCATION >/dev/null 2>&1; then
+            echo "::set-output name=exists::true"
           else
-            echo "Repository not found. Creating..."
-            gcloud artifacts repositories create ${{ variables.REPOSITORY_NAME }} --location=${{ variables.LOCATION }} --repository-format=docker
+            echo "::set-output name=exists::false"
           fi
-        continue-on-error: false  # Fail workflow if check fails
+        continue-on-error: true
+      - name: Create the repository if it doesn't exist
+        if: steps.check_repo.outputs.exists == 'false'
+        run: |
+          gcloud artifacts repositories create $REPOSITORY_NAME --location=$LOCATION --repository-format=docker
