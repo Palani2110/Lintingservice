@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - abhigyantest
-env:
-  # Replace with the actual repository name
-  REPOSITORY_NAME: my-artifact-repository
+# env:
+#   # Replace with the actual repository name
+#   REPOSITORY_NAME: my-artifact-repository
 
-  # Replace with the desired location (e.g., us-central1)
-  LOCATION: us-central1
+#   # Replace with the desired location (e.g., us-central1)
+#   LOCATION: us-central1
   # workflow_dispatch:
   #   inputs:
   #     repository_name:
@@ -46,4 +46,4 @@ jobs:
       - name: Create the repository if it doesn't exist
         if: steps.check_repo.outputs.exists == 'false'
         run: |
-          gcloud artifacts repositories create ${{ vars.REPOSITORY_NAME }} --location=$${{ vars.LOCATION }} --repository-format=docker
+          gcloud artifacts repositories create ${{ vars.REPOSITORY_NAME }} --location=${{ vars.LOCATION }} --repository-format=docker
