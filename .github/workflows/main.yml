@@ -4,38 +4,33 @@ on:
   push:
     branches:
       - abhigyantest
-  # workflow_dispatch:
-  #   inputs:
-  #     repository_name:
-  #       description: 'Name of the repository'
-  #       required: true
-  #     location:
-  #       description: 'Location for the repository'
-  #       required: true
+
+variables:
+  # Replace with the actual repository name
+  REPOSITORY_NAME: my-artifact-repository
+
+  # Replace with the desired location (e.g., us-central1)
+  LOCATION: us-central1
 
 jobs:
   authenticate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          # Consider using workload identity or uploaded service account key
 
       - name: Check if the repository exists
         id: check_repo
         run: |
-          if gcloud artifacts repositories describe $REPOSITORY_NAME --location=$LOCATION >/dev/null 2>&1; then
-            echo "::set-output name=exists::true"
+          if gcloud artifacts repositories describe ${{ variables.REPOSITORY_NAME }} --location=${{ variables.LOCATION }} >/dev/null 2>&1; then
+            echo "Repository already exists."
           else
-            echo "::set-output name=exists::false"
+            echo "Repository not found. Creating..."
+            gcloud artifacts repositories create ${{ variables.REPOSITORY_NAME }} --location=${{ variables.LOCATION }} --repository-format=docker
           fi
-        continue-on-error: true
-      - name: Create the repository if it doesn't exist
-        if: steps.check_repo.outputs.exists == 'false'
-        run: |
-          gcloud artifacts repositories create $REPOSITORY_NAME --location=$LOCATION --repository-format=docker
+        continue-on-error: false  # Fail workflow if check fails
