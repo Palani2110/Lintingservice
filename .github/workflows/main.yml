@@ -29,17 +29,17 @@ jobs:
       - name: Check if the repository exists
         id: check_repo
         run: |
-          if gcloud artifacts repositories describe ${{ inputs.repository_name }} --location=${{ inputs.location }} >/dev/null 2>&1; then
+          if gcloud artifacts repositories describe ${{ variables.REPOSITORY_NAME }} --location=${{ variables.LOCATION }} >/dev/null 2>&1; then
             echo "::set-output name=exists::true"
           else
             echo "::set-output name=exists::false"
           fi
         continue-on-error: true
         env:
-          location: ${{ inputs.location }}
+          location: ${{ variables.LOCATION }}
       - name: Create the repository if it doesn't exist
         if: steps.check_repo.outputs.exists == 'false'
         run: |
-          gcloud artifacts repositories create ${{ inputs.repository_name }} --location=${{ inputs.location }} --repository-format=docker
+          gcloud artifacts repositories create ${{ variables.REPOSITORY_NAME }} --location=${{ variables.LOCATION }} --repository-format=docker
         env:
-          location: ${{ inputs.location }}
+          location: ${{ variables.LOCATION }}
