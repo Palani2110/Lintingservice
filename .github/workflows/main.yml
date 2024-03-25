@@ -2,8 +2,8 @@ name: Create Repo
 
 on:
   push:
-    branches: ['abhigyantest']
-    paths: ['CICD/**']
+    # branches: ['abhigyantest']
+    # paths: ['CICD/**']
 # env:
 #   # Replace with the actual repository name
 #   REPOSITORY_NAME: my-artifact-repository
