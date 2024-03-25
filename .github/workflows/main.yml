@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
      path: "${{ github.workspace }}/CICD"
+     folder: "/CICD"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,7 +32,8 @@ jobs:
       - name: Print workflow name
         run: |
           echo "${{ github.workspace }}"
-          cd path
+          cd "${{ github.workspace }}${{ env.folder }}"
+
           pwd
         
       - name: "Say Hello Mona it's Monday"
