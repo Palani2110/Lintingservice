@@ -22,11 +22,20 @@ on:
 jobs:
   authenticate:
     runs-on: ubuntu-latest
+    env:
+     path: "${{ github.workspace }}/CICD"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Print workflow name
+        run: |
+          echo "${{ github.workspace }}"
+          cd path
+          pwd
+        
       - name: "Say Hello Mona it's Monday"
-        run: echo "${{ vars.LOCATION }}".
+        run:  echo "${{ vars.LOCATION }}".
         
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
