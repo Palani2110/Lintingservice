@@ -2,13 +2,13 @@ name: Python Lint and SonarQube Scan
 
 on:
    push:
+       branches: ['abhigyantest']
+       paths: ['CICD/**']
   #   branches:
   #     - main
   # pull_request:
   #   branches:
   #     - main
-    branches: ['abhigyantest']
-    paths: ['CICD/**']
 
 jobs:
   lint_and_scan:
