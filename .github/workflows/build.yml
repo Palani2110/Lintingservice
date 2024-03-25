@@ -3,7 +3,7 @@ name: Python Lint and SonarQube Scan
 on:
    push:
        branches: ['abhigyantest']
-       #paths: ['CICD/**']
+       paths: ['CICD/**']
   #   branches:
   #     - main
   # pull_request:
