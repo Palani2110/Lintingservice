@@ -2,7 +2,7 @@ name: Create Repo
 
 on:
   push:
-    # branches: ['abhigyantest']
+     branches: ['master']
     # paths: ['CICD/**']
 # env:
 #   # Replace with the actual repository name
