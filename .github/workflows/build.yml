@@ -13,6 +13,9 @@ on:
 jobs:
   lint_and_scan:
     runs-on: ubuntu-latest
+    env:
+       path: "${{ github.workspace }}/CICD"
+       folder: "/CICD"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,7 +35,9 @@ jobs:
           pylint python.py  # Replace 'python.py' with your actual Python script name
           
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+        run: |
+            cd "${{ github.workspace }}${{ env.folder }}"
+      - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
