@@ -35,8 +35,6 @@ jobs:
           pylint python.py  # Replace 'python.py' with your actual Python script name
           
       - name: SonarQube Scan
-        run: |
-            cd "${{ github.workspace }}${{ env.folder }}"
             sonar-scanner \
               -Dsonar.projectKey=my_project_key \
               -Dsonar.sources=. \
