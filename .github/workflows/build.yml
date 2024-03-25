@@ -37,6 +37,10 @@ jobs:
       - name: SonarQube Scan
         run: |
             cd "${{ github.workspace }}${{ env.folder }}"
+            sonar-scanner \
+              -Dsonar.projectKey=my_project_key \
+              -Dsonar.sources=. \
+              -Dsonar.projectSettings=CICD/
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
