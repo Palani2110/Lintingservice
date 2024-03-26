@@ -36,13 +36,7 @@ jobs:
           
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
-        with:
-          sonarLogin: ${{ secrets.SONAR_TOKEN }}
-          sonarHost: ${{ secrets.SONAR_HOST_URL }}
-          options: >
-            -Dsonar.projectKey=my_project_key
-            -Dsonar.sources=.
-            -Dsonar.projectSettings=path/to/sonar-project.properties
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
