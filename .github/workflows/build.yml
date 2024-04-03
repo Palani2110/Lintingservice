@@ -2,7 +2,7 @@ name: Python Lint and SonarQube Scan
 
 on:
   push:
-    paths: ['test-authnicate/**']
+    paths: ['test/**']
 
 jobs:
   lint_and_scan:
