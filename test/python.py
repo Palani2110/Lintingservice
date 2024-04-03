@@ -1,4 +1,4 @@
-# Sample Python script for linting
+# Sample Python script for linting.
 
 """
 This module provides functions for basic arithmetic operations.
