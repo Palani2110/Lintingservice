@@ -15,5 +15,5 @@ RUN pylint python.py
 ENV GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/credentials.json
 # Set container user uid/gid
 USER deid_user:deid_group
-# Run the Python script
+# Run the Python script.
 CMD ["python", "python.py"]
