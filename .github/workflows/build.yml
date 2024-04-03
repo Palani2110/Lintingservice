@@ -2,15 +2,13 @@ name: Python Lint and SonarQube Scan
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    paths: ['test/**']
 
 jobs:
   lint_and_scan:
     runs-on: ubuntu-latest
+    env:
+        folder: "/testN"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,6 +25,7 @@ jobs:
           
       - name: Lint Python code
         run: |
+          cd "${{ github.workspace }}${{ env.folder }}"
           pylint python.py  # Replace 'python.py' with your actual Python script name
           
       - name: SonarQube Scan
